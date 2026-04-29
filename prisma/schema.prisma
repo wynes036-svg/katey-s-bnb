@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Room {
+  id          String      @id @default(cuid())
+  name        String
+  description String
+  moodId      String
+  mood        Mood        @relation(fields: [moodId], references: [id])
+  vrImageUrl  String
+  povVideoUrl String
+  photos      RoomPhoto[]
+  bookings    Booking[]
+  spotlights  ArtistSpotlight[] @relation("RoomSpotlights")
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model RoomPhoto {
+  id       String    @id @default(cuid())
+  roomId   String
+  room     Room      @relation(fields: [roomId], references: [id])
+  url      String
+  hotspots Hotspot[]
+}
+
+model Hotspot {
+  id          String    @id @default(cuid())
+  photoId     String
+  photo       RoomPhoto @relation(fields: [photoId], references: [id])
+  pitch       Float
+  yaw         Float
+  title       String
+  description String
+}
+
+model Mood {
+  id          String            @id @default(cuid())
+  name        String            @unique
+  videoUrl    String
+  audioUrl    String
+  descriptor  String
+  rooms       Room[]
+  experiences LocalExperience[]
+}
+
+model Booking {
+  id                  String              @id @default(cuid())
+  reservationId       String              @unique @default(cuid())
+  roomId              String
+  room                Room                @relation(fields: [roomId], references: [id])
+  guestName           String
+  guestEmail          String
+  checkIn             DateTime
+  checkOut            DateTime
+  status              BookingStatus       @default(PENDING)
+  stripeSessionId     String?
+  totalPrice          Int
+  breakfastSelections Json
+  experiences         BookingExperience[]
+  welcomePacketUrl    String?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@index([roomId, checkIn, checkOut])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model LocalExperience {
+  id             String              @id @default(cuid())
+  title          String
+  description    String
+  price          Int
+  moodId         String
+  mood           Mood                @relation(fields: [moodId], references: [id])
+  availableDates DateTime[]
+  isActive       Boolean             @default(true)
+  bookings       BookingExperience[]
+}
+
+model BookingExperience {
+  id           String          @id @default(cuid())
+  bookingId    String
+  booking      Booking         @relation(fields: [bookingId], references: [id])
+  experienceId String
+  experience   LocalExperience @relation(fields: [experienceId], references: [id])
+  price        Int
+}
+
+model ArtistSpotlight {
+  id            String   @id @default(cuid())
+  title         String
+  videoUrl      String
+  videoDuration Int
+  description   String
+  externalUrl   String?
+  isPublished   Boolean  @default(false)
+  rooms         Room[]   @relation("RoomSpotlights")
+  createdAt     DateTime @default(now())
+}
+
+model WeatherCache {
+  id          String   @id @default("singleton")
+  temperature Float
+  condition   String
+  descriptor  String
+  fetchedAt   DateTime
+}
