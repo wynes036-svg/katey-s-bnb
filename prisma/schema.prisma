@@ -61,12 +61,9 @@ model Booking {
   guestEmail          String
   checkIn             DateTime
   checkOut            DateTime
-  selectedMood        String              // Store the mood choice for this booking
   status              BookingStatus       @default(PENDING)
   stripeSessionId     String?
   totalPrice          Int
-  breakfastSelections Json
-  experiences         BookingExperience[]
   welcomePacketUrl    String?
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
@@ -89,16 +86,6 @@ model LocalExperience {
   mood           Mood                @relation(fields: [moodId], references: [id])
   availableDates DateTime[]
   isActive       Boolean             @default(true)
-  bookings       BookingExperience[]
-}
-
-model BookingExperience {
-  id           String          @id @default(cuid())
-  bookingId    String
-  booking      Booking         @relation(fields: [bookingId], references: [id])
-  experienceId String
-  experience   LocalExperience @relation(fields: [experienceId], references: [id])
-  price        Int
 }
 
 model ArtistSpotlight {
