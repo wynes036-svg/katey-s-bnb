@@ -1,0 +1,11 @@
+This folder is for room photos. 
+
+Add your room images here with these suggested names:
+- main-view.jpg (main room view)
+- cozy-corner.jpg (reading nook or seating area)
+- bathroom.jpg (bathroom view)
+- window-view.jpg (view from the window)
+- bed-detail.jpg (close-up of the bed area)
+- amenities.jpg (special amenities or details)
+
+Images should be high quality (at least 1200px wide) and in JPG or PNG format.

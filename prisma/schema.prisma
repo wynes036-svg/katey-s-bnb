@@ -12,12 +12,11 @@ datasource db {
 
 model Room {
   id          String      @id @default(cuid())
-  name        String
+  name        String      @default("The Sanctuary")
   description String
-  moodId      String
-  mood        Mood        @relation(fields: [moodId], references: [id])
-  vrImageUrl  String
-  povVideoUrl String
+  basePrice   Int         @default(250000) // Price in cents (KES 2500/night)
+  vrImageUrl  String?
+  povVideoUrl String?
   photos      RoomPhoto[]
   bookings    Booking[]
   spotlights  ArtistSpotlight[] @relation("RoomSpotlights")
@@ -47,22 +46,22 @@ model Hotspot {
 model Mood {
   id          String            @id @default(cuid())
   name        String            @unique
-  videoUrl    String
-  audioUrl    String
+  videoUrl    String?
+  audioUrl    String?
   descriptor  String
-  rooms       Room[]
   experiences LocalExperience[]
 }
 
 model Booking {
   id                  String              @id @default(cuid())
   reservationId       String              @unique @default(cuid())
-  roomId              String
+  roomId              String              @default("the-sanctuary")
   room                Room                @relation(fields: [roomId], references: [id])
   guestName           String
   guestEmail          String
   checkIn             DateTime
   checkOut            DateTime
+  selectedMood        String              // Store the mood choice for this booking
   status              BookingStatus       @default(PENDING)
   stripeSessionId     String?
   totalPrice          Int

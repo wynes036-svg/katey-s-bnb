@@ -1,28 +1,32 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  /* Tactile colour palette — The Sensory Stay */
-  --background: #FAF8F5;
-  --foreground: #1C1917;
-  --accent-terracotta: #C4622D;
-  --accent-sage: #7A9E7E;
-  --muted: #E8E4DF;
-  --muted-foreground: #78716C;
-  --border: #D6D0C8;
+  --background: #FAFAF8;
+  --foreground: #1A1A18;
+  --accent: #B85C2A;
+  --accent-hover: #9A4D22;
+  --accent-light: #F5EDE6;
+  --sage: #6B8F71;
+  --muted: #EFEFEB;
+  --muted-foreground: #6B6860;
+  --border: #E2DDD6;
   --card: #FFFFFF;
-  --card-foreground: #1C1917;
+  --gold: #C9A84C;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-accent-terracotta: var(--accent-terracotta);
-  --color-accent-sage: var(--accent-sage);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-sage: var(--sage);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-card: var(--card);
+  --color-gold: var(--gold);
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -42,30 +46,54 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 500;
   line-height: 1.2;
   color: var(--foreground);
+  letter-spacing: -0.01em;
 }
 
 a {
-  color: var(--accent-terracotta);
+  color: var(--accent);
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 a:hover {
+  color: var(--accent-hover);
   text-decoration: underline;
+}
+
+/* Divider line */
+.divider {
+  width: 48px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto;
+}
+
+/* Section label */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Card hover lift */
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
 }
 
 /* Utility: visually hidden but accessible */

@@ -57,7 +57,7 @@ const MOCK_ROOMS: Record<string, Room> = {
     id: 'room-culinary',
     name: 'The Larder Suite',
     description:
-      'Overlooking the kitchen garden, with artisan breakfast served in-room. Wake to the scent of fresh bread and the sound of birdsong.',
+      'Overlooking the kitchen garden, with a fully equipped kitchen for your culinary adventures. Wake to the scent of fresh herbs and the sound of birdsong.',
     moodId: 'culinary',
     mood: { id: 'culinary', name: 'Culinary Adventure', videoUrl: '', audioUrl: '', descriptor: 'Flavour, craft, and local stories' },
     vrImageUrl: 'https://pannellum.org/images/alma.jpg',
@@ -225,7 +225,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
             title={`${room.name} — first-person walkthrough`}
           />
           <p className="mt-2 text-xs text-[#78716C] text-center">
-            A first-person walkthrough from waking up through the breakfast experience
+            A first-person walkthrough showcasing the room and kitchen facilities
           </p>
         </section>
 

@@ -30,10 +30,9 @@ export interface Room {
   id: string
   name: string
   description: string
-  moodId: string
-  mood: Mood
-  vrImageUrl: string
-  povVideoUrl: string
+  basePrice?: number
+  vrImageUrl?: string | null
+  povVideoUrl?: string | null
   photos: RoomPhoto[]
   isActive: boolean
   createdAt: Date
@@ -74,6 +73,7 @@ export interface Booking {
   guestEmail: string
   checkIn: Date
   checkOut: Date
+  selectedMood: string
   status: BookingStatus
   stripeSessionId?: string | null
   totalPrice: number
@@ -133,8 +133,6 @@ export interface BookingFlowState {
   checkOut: Date | null
   guestName: string
   guestEmail: string
-  breakfastSelections: BreakfastSelection[]
-  selectedExperiences: LocalExperience[]
   totalPrice: number
   paymentError: string | null
 }

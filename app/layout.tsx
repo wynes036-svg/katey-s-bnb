@@ -17,14 +17,19 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Katey's BNB",
+  title: "Katye's BnB - Your Perfect Sanctuary",
   description:
-    "A mood-driven, immersive Bed & Breakfast experience. Choose your vibe, explore rooms through 360° tours, and curate your perfect stay at Katey's BNB.",
+    "An intimate, self-catering accommodation experience. Choose your vibe and enjoy a personalized stay in our beautifully curated single room at Katye's BnB. Fully equipped kitchen for your convenience.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
-    title: "Katey's BNB",
+    title: "Katye's BnB - Your Perfect Sanctuary",
     description:
-      "A mood-driven, immersive Bed & Breakfast experience. Choose your vibe, explore rooms through 360° tours, and curate your perfect stay at Katey's BNB.",
+      "An intimate, self-catering accommodation experience. Choose your vibe and enjoy a personalized stay in our beautifully curated single room at Katye's BnB. Fully equipped kitchen for your convenience.",
     type: "website",
+    images: ["/logo.png"],
   },
 };
 
