@@ -11,7 +11,6 @@ async function getBooking(reservationId: string) {
       where: { reservationId },
       include: {
         room: true,
-        experiences: { include: { experience: true } },
       },
     })
   } catch {

@@ -16,9 +16,6 @@ export async function GET(
       where: { reservationId: id },
       include: {
         room: true,
-        experiences: {
-          include: { experience: true },
-        },
       },
     })
 

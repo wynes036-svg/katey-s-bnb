@@ -8,12 +8,6 @@ interface BookingIntentBody {
   checkOut: string
   guestName: string
   guestEmail: string
-  breakfastSelections: Array<{
-    personIndex: number
-    items: string[]
-    restrictions: string[]
-  }>
-  experienceIds: string[]
 }
 
 export async function POST(request: NextRequest) {
@@ -25,9 +19,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
   }
 
-  const { roomId, checkIn, checkOut, guestName, guestEmail, breakfastSelections, experienceIds } = body
+  const { roomId, checkIn, checkOut, guestName, guestEmail } = body
 
-  // Basic validation
   if (!roomId || !checkIn || !checkOut || !guestName || !guestEmail) {
     return NextResponse.json(
       { error: 'Missing required fields: roomId, checkIn, checkOut, guestName, guestEmail.' },
@@ -50,9 +43,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Atomic availability check + booking creation
     const booking = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      // Check for conflicting confirmed bookings (SELECT FOR UPDATE semantics)
+      // Check for conflicting confirmed bookings
       const conflict = await tx.booking.findFirst({
         where: {
           roomId,
@@ -77,30 +69,12 @@ export async function POST(request: NextRequest) {
         throw new Error('NOT_FOUND: Room not found or is no longer available.')
       }
 
-      // Verify experiences exist and are active
-      let experiences: Array<{ id: string; price: number }> = []
-      if (experienceIds && experienceIds.length > 0) {
-        experiences = await tx.localExperience.findMany({
-          where: { id: { in: experienceIds }, isActive: true },
-          select: { id: true, price: true },
-        })
-
-        if (experiences.length !== experienceIds.length) {
-          throw new Error(
-            'UNAVAILABLE: One or more selected experiences are no longer available.'
-          )
-        }
-      }
-
-      // Calculate total price (£150/night placeholder + experiences)
+      // Calculate total price — KES 2500/night (stored as 250000 cents)
       const nights = Math.ceil(
         (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
       )
-      const roomPrice = nights * 15000 // £150/night in pence
-      const experiencesTotal = experiences.reduce((sum, e) => sum + e.price, 0)
-      const totalPrice = roomPrice + experiencesTotal
+      const totalPrice = nights * 250000
 
-      // Create pending booking
       const newBooking = await tx.booking.create({
         data: {
           roomId,
@@ -110,32 +84,16 @@ export async function POST(request: NextRequest) {
           checkOut: checkOutDate,
           status: 'PENDING',
           totalPrice,
-          breakfastSelections: breakfastSelections ?? [],
-          experiences: {
-            create: experiences.map((e) => ({
-              experienceId: e.id,
-              price: e.price,
-            })),
-          },
-        },
-        include: {
-          experiences: true,
         },
       })
 
       return newBooking
     })
 
-    // Create Stripe Checkout Session (mock for now)
+    // Mock Stripe session (replace with real Stripe in production)
     const stripeSessionId = `mock_session_${booking.id}`
     const checkoutUrl = `/booking/confirmation?session=${stripeSessionId}&bookingId=${booking.reservationId}`
 
-    // In production, you would:
-    // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-    // const session = await stripe.checkout.sessions.create({ ... })
-    // checkoutUrl = session.url
-
-    // Update booking with stripe session ID
     await prisma.booking.update({
       where: { id: booking.id },
       data: { stripeSessionId },
@@ -151,10 +109,7 @@ export async function POST(request: NextRequest) {
 
     if (message.startsWith('CONFLICT:')) {
       return NextResponse.json(
-        {
-          error:
-            'This room is not available for your selected dates. Please choose different dates.',
-        },
+        { error: 'This room is not available for your selected dates. Please choose different dates.' },
         { status: 409 }
       )
     }
@@ -163,16 +118,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'The selected room is no longer available.' },
         { status: 404 }
-      )
-    }
-
-    if (message.startsWith('UNAVAILABLE:')) {
-      return NextResponse.json(
-        {
-          error:
-            'One or more selected experiences are no longer available. Please review your selections.',
-        },
-        { status: 409 }
       )
     }
 

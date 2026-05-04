@@ -43,9 +43,6 @@ export async function POST(request: NextRequest) {
         },
         include: {
           room: true,
-          experiences: {
-            include: { experience: true },
-          },
         },
       })
 
