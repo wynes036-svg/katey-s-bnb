@@ -93,7 +93,6 @@ async function getRoom(id: string): Promise<{ room: Room; spotlight: ArtistSpotl
       prisma.room.findFirst({
         where: { id, isActive: true },
         include: {
-          mood: true,
           photos: { include: { hotspots: true } },
           spotlights: { where: { isPublished: true }, take: 1 },
         },
