@@ -11,8 +11,6 @@ const MOCK_ROOM: Room = {
   id: 'the-sanctuary',
   name: "Katelyn's Sanctuary",
   description: 'Our beautifully curated room transforms to match your chosen mood - from cozy and intimate to wild and adventurous.',
-  moodId: 'cozy',
-  mood: { id: 'cozy', name: 'Cozy & Quiet', videoUrl: '', audioUrl: '', descriptor: 'Warm, still, and intimate' },
   vrImageUrl: '',
   povVideoUrl: '',
   photos: [],
@@ -25,7 +23,7 @@ async function getRoom(): Promise<Room> {
   try {
     const room = await prisma.room.findFirst({
       where: { isActive: true },
-      include: { mood: true, photos: { include: { hotspots: true } } },
+      include: { photos: { include: { hotspots: true } } },
     })
     return (room as unknown as Room) ?? MOCK_ROOM
   } catch {

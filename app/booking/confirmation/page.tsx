@@ -10,7 +10,7 @@ async function getBooking(reservationId: string) {
     return await prisma.booking.findUnique({
       where: { reservationId },
       include: {
-        room: { include: { mood: true } },
+        room: true,
         experiences: { include: { experience: true } },
       },
     })

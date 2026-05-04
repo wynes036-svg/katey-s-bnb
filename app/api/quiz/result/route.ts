@@ -40,27 +40,18 @@ export async function POST(request: NextRequest) {
   // Score the quiz
   const quizResults = scoreQuiz(answers)
 
-  // Fetch active rooms with their mood from DB
+  // Fetch active rooms from DB
   const rooms = await prisma.room.findMany({
     where: { isActive: true },
-    include: { mood: true },
   })
 
-  type RoomWithMood = (typeof rooms)[number]
-
-  // Map quiz results to rooms by mood name
-  const recommendations = quizResults
-    .map((result) => {
-      const room = rooms.find((r: RoomWithMood) => r.mood?.name === result.moodName) ?? null
-      return {
-        room,
-        score: result.score,
-        explanation: result.explanation,
-      }
-    })
-    .filter((rec) => rec.room !== null)
-    // Already sorted descending by scoreQuiz, but ensure order is preserved
-    .sort((a, b) => b.score - a.score)
+  // Map quiz results to rooms (no mood relation, just return first room)
+  const room = rooms[0] ?? null
+  const recommendations = quizResults.map((result) => ({
+    room,
+    score: result.score,
+    explanation: result.explanation,
+  })).filter((rec) => rec.room !== null)
 
   return NextResponse.json({ recommendations })
 }

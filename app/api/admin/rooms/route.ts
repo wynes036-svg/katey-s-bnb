@@ -17,7 +17,6 @@ export async function GET() {
 
   try {
     const rooms = await prisma.room.findMany({
-      include: { mood: true },
       orderBy: { createdAt: 'desc' },
     })
     return NextResponse.json({ rooms })
@@ -33,18 +32,17 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { name, description, moodId, vrImageUrl, povVideoUrl } = body
+    const { name, description, vrImageUrl, povVideoUrl } = body
 
-    if (!name || !description || !moodId || !vrImageUrl || !povVideoUrl) {
+    if (!name || !description) {
       return NextResponse.json(
-        { error: 'Missing required fields: name, description, moodId, vrImageUrl, povVideoUrl.' },
+        { error: 'Missing required fields: name, description.' },
         { status: 400 }
       )
     }
 
     const room = await prisma.room.create({
-      data: { name, description, moodId, vrImageUrl, povVideoUrl },
-      include: { mood: true },
+      data: { name, description, vrImageUrl, povVideoUrl },
     })
 
     return NextResponse.json({ room }, { status: 201 })

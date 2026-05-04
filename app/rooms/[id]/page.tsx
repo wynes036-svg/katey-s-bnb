@@ -41,11 +41,8 @@ const MOCK_HOTSPOTS: Hotspot[] = [
 const MOCK_ROOMS: Record<string, Room> = {
   'room-cozy': {
     id: 'room-cozy',
-    name: 'The Hearth Room',
-    description:
-      'A warm, intimate room with a wood-burning stove and handmade quilts. Sink into the deep armchair with a book while the fire crackles beside you.',
-    moodId: 'cozy',
-    mood: { id: 'cozy', name: 'Cozy & Quiet', videoUrl: '', audioUrl: '', descriptor: 'Warm, still, and intimate' },
+    name: "Katelyn's Sanctuary",
+    description: 'A warm, intimate room with a wood-burning stove and handmade quilts. Sink into the deep armchair with a book while the fire crackles beside you.',
     vrImageUrl: 'https://pannellum.org/images/alma.jpg',
     povVideoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
     photos: [{ id: 'p1', roomId: 'room-cozy', url: 'https://pannellum.org/images/alma.jpg', hotspots: MOCK_HOTSPOTS }],
@@ -55,11 +52,8 @@ const MOCK_ROOMS: Record<string, Room> = {
   },
   'room-culinary': {
     id: 'room-culinary',
-    name: 'The Larder Suite',
-    description:
-      'Overlooking the kitchen garden, with a fully equipped kitchen for your culinary adventures. Wake to the scent of fresh herbs and the sound of birdsong.',
-    moodId: 'culinary',
-    mood: { id: 'culinary', name: 'Culinary Adventure', videoUrl: '', audioUrl: '', descriptor: 'Flavour, craft, and local stories' },
+    name: "Katelyn's Sanctuary",
+    description: 'Overlooking the kitchen garden, with a fully equipped kitchen for your culinary adventures. Wake to the scent of fresh herbs and the sound of birdsong.',
     vrImageUrl: 'https://pannellum.org/images/alma.jpg',
     povVideoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
     photos: [{ id: 'p2', roomId: 'room-culinary', url: 'https://pannellum.org/images/alma.jpg', hotspots: MOCK_HOTSPOTS }],
@@ -69,11 +63,8 @@ const MOCK_ROOMS: Record<string, Room> = {
   },
   'room-wild': {
     id: 'room-wild',
-    name: 'The Hilltop Loft',
-    description:
-      'Floor-to-ceiling windows with panoramic countryside views. Fall asleep under the stars and wake to a horizon that stretches for miles.',
-    moodId: 'wild',
-    mood: { id: 'wild', name: 'Wild & Adventurous', videoUrl: '', audioUrl: '', descriptor: 'Open skies and dramatic landscapes' },
+    name: "Katelyn's Sanctuary",
+    description: 'Floor-to-ceiling windows with panoramic countryside views. Fall asleep under the stars and wake to a horizon that stretches for miles.',
     vrImageUrl: 'https://pannellum.org/images/alma.jpg',
     povVideoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
     photos: [{ id: 'p3', roomId: 'room-wild', url: 'https://pannellum.org/images/alma.jpg', hotspots: MOCK_HOTSPOTS }],

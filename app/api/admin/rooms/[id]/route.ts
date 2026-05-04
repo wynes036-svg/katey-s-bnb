@@ -23,7 +23,7 @@ export async function GET(
   try {
     const room = await prisma.room.findUnique({
       where: { id },
-      include: { mood: true, photos: { include: { hotspots: true } } },
+      include: { photos: { include: { hotspots: true } } },
     })
     if (!room) return NextResponse.json({ error: 'Room not found.' }, { status: 404 })
     return NextResponse.json({ room })
@@ -44,19 +44,17 @@ export async function PATCH(
 
   try {
     const body = await request.json()
-    const { name, description, moodId, vrImageUrl, povVideoUrl, isActive } = body
+    const { name, description, vrImageUrl, povVideoUrl, isActive } = body
 
     const room = await prisma.room.update({
       where: { id },
       data: {
         ...(name !== undefined && { name }),
         ...(description !== undefined && { description }),
-        ...(moodId !== undefined && { moodId }),
         ...(vrImageUrl !== undefined && { vrImageUrl }),
         ...(povVideoUrl !== undefined && { povVideoUrl }),
         ...(isActive !== undefined && { isActive }),
       },
-      include: { mood: true },
     })
 
     return NextResponse.json({ room })
@@ -76,7 +74,6 @@ export async function DELETE(
   const { id } = await params
 
   try {
-    // Soft delete — deactivate rather than hard delete
     await prisma.room.update({
       where: { id },
       data: { isActive: false },
