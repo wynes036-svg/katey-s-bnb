@@ -220,24 +220,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Artist spotlight ── */}
-      {spotlight && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20" aria-labelledby="spotlight-heading">
-          <div className="text-center mb-12">
-            <p className="section-label mb-4">Local Stories</p>
-            <div className="divider mb-6" />
-            <h2
-              id="spotlight-heading"
-              className="text-3xl sm:text-4xl text-[#1A1A18]"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              Meet the Makers
-            </h2>
-          </div>
-          <ArtistSpotlight spotlight={spotlight} />
-        </section>
-      )}
-
       {/* ── Footer ── */}
       <footer className="bg-[#1A1A18] text-white pt-14 pb-8 px-4">
         <div className="max-w-5xl mx-auto">

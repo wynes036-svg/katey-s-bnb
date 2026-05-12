@@ -238,24 +238,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
           </Link>
         </section>
 
-        {/* Artist Spotlight */}
-        {spotlight && (
-          <section aria-labelledby="spotlight-heading">
-            <div className="mb-6">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#C4622D] mb-2">
-                Local Stories
-              </p>
-              <h2
-                id="spotlight-heading"
-                className="text-2xl text-[#1C1917]"
-                style={{ fontFamily: 'var(--font-serif)' }}
-              >
-                Meet the Makers
-              </h2>
-            </div>
-            <ArtistSpotlight spotlight={spotlight} />
-          </section>
-        )}
+
       </main>
     </div>
   )
