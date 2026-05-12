@@ -188,7 +188,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
             360° Room Tour
           </h2>
           <ClientVRTourViewer
-            imageUrl={room.vrImageUrl}
+            imageUrl={room.vrImageUrl ?? ''}
             hotspots={hotspots}
           />
           {hotspots.length > 0 && (
@@ -208,7 +208,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
             Experience Your Stay
           </h2>
           <ClientPOVTourPlayer
-            videoUrl={room.povVideoUrl}
+            videoUrl={room.povVideoUrl ?? ''}
             title={`${room.name} — first-person walkthrough`}
           />
           <p className="mt-2 text-xs text-[#78716C] text-center">
