@@ -167,9 +167,6 @@ export default async function RoomPage({ params }: RoomPageProps) {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Room header */}
         <div className="mb-8">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#C4622D] mb-2">
-            {room.mood?.name}
-          </p>
           <h1
             className="text-3xl sm:text-4xl text-[#1C1917] mb-4"
             style={{ fontFamily: 'var(--font-serif)' }}
